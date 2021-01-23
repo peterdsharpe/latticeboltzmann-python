@@ -4,7 +4,7 @@
 
 ### Project-Specific
 # Add things here!
-
+*.png
 
 ### IntelliJ project files
 .idea
