@@ -15,7 +15,6 @@ Nx = 400  # resolution x-dir
 Ny = 100  # resolution y-dir
 rho0 = 100  # average density
 tau = 0.6  # collision timescale
-Nt = 4000  # number of timesteps
 plotRealTime = True  # switch on for plotting as the simulation goes along
 
 # Lattice speeds / weights
@@ -43,8 +42,10 @@ cylinder = (X - Nx / 4) ** 2 + (Y - Ny / 2) ** 2 < (Ny / 4) ** 2
 fig = plt.figure(figsize=(4, 2), dpi=80)
 
 # Simulation Main Loop
-for it in range(Nt):
-    print(it)
+iteration = 0
+while True:
+    iteration += 1
+    print(f"Iteration {iteration}")
 
     # Drift
     for i, cx, cy in zip(idxs, cxs, cys):
@@ -72,7 +73,7 @@ for it in range(Nt):
     F[cylinder, :] = bndryF
 
     # plot in real time - color 1/2 particles blue, other half red
-    if (plotRealTime and (it % 10) == 0) or (it == Nt - 1):
+    if (plotRealTime and (iteration % 10) == 0):
         plt.cla()
         u[cylinder] = 0
         v[cylinder] = 0
@@ -88,8 +89,4 @@ for it in range(Nt):
         ax.get_xaxis().set_visible(False)
         ax.get_yaxis().set_visible(False)
         ax.set_aspect('equal')
-        plt.pause(0.001)
-
-# Save figure
-plt.savefig('latticeboltzmann.png', dpi=240)
-plt.show()
+        plt.pause(1e-6)
